@@ -2,9 +2,9 @@ import Foundation
 import LilacTOML
 
 #if canImport(System)
-    import System
+    package import System
 #else
-    import SystemPackage
+    package import SystemPackage
 #endif
 
 package struct LilacConfig: Codable {
@@ -44,7 +44,7 @@ package func readConfig(from filePath: FilePath) throws -> String {
         try fd.seek(offset: 0, from: .start)
         var buffer = [UInt8](repeating: 0, count: Int(fileSize))
         let bytesRead = try buffer.withUnsafeMutableBytes { rawBuffer in
-            try fd.read(into: rawBuffer)
+            unsafe try fd.read(into: rawBuffer)
         }
         return String(decoding: buffer.prefix(bytesRead), as: UTF8.self)
     }
