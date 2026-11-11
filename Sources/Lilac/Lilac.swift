@@ -2,6 +2,14 @@
 // https://docs.swift.org/swift-book
 
 import ArgumentParser
+import Foundation
+import LilacConfig
+
+#if canImport(System)
+    import System
+#else
+    import SystemPackage
+#endif
 
 protocol LilacParsableCommand: AsyncParsableCommand {}
 
@@ -18,6 +26,10 @@ struct Lilac: LilacParsableCommand {
     )
 
     mutating func run() async throws {
-        print("test")
+        let configPath = lilacConfigPath.absolutePath
+        print("config path: ", configPath.string)
+        let configData = try readConfig(from: configPath)
+        let config = try parseConfig(from: configData)
+        print(config)
     }
 }
