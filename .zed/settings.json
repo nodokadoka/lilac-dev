@@ -1,0 +1,21 @@
+{
+  "read_only_files": ["**/.build/*"],
+  "enable_language_server": false,
+  "languages": {
+    "Swift": {
+      "enable_language_server": true,
+    },
+    "Markdown": {
+      "enable_language_server": true,
+    },
+    "YAML": {
+      "enable_language_server": true,
+    },
+    "JSON": {
+      "enable_language_server": true,
+    },
+    "JSONC": {
+      "enable_language_server": true,
+    }
+  }
+}
