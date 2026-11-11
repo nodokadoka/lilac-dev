@@ -20,6 +20,16 @@ let package = Package(
             name: "Lilac",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "SystemPackage", package: "swift-system"),
+                "LilacConfig",
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("ApproachableConcurrency")
+            ],
+        ),
+        .target(
+            name: "LilacConfig",
+            dependencies: [
                 "LilacTOML",
             ],
             swiftSettings: [
