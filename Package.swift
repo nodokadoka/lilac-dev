@@ -3,6 +3,27 @@
 
 import PackageDescription
 
+let swiftSettings: [SwiftSetting] = [
+    // https://github.com/apple/swift-evolution/blob/main/proposals/0335-existential-any.md
+    .enableUpcomingFeature("ExistentialAny"),
+
+    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0444-member-import-visibility.md
+    .enableUpcomingFeature("MemberImportVisibility"),
+
+    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0409-access-level-on-imports.md
+    .enableUpcomingFeature("InternalImportsByDefault"),
+
+    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0461-async-function-isolation.md
+    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+
+    // swift 6.4
+    .enableUpcomingFeature("ApproachableConcurrency"),
+
+    .strictMemorySafety(),
+
+    .treatAllWarnings(as: .error)
+]
+
 let package = Package(
     name: "Lilac",
     platforms: [.macOS(.v27)],
@@ -12,10 +33,9 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.7.0"),
         .package(url: "https://github.com/mattt/swift-toml.git", from: "2.1.0"),
+        .package(url: "https://github.com/apple/swift-system", from: "1.8.0"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
             name: "Lilac",
             dependencies: [
@@ -23,34 +43,26 @@ let package = Package(
                 .product(name: "SystemPackage", package: "swift-system"),
                 "LilacConfig",
             ],
-            swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency")
-            ],
+            swiftSettings: swiftSettings,
         ),
         .target(
             name: "LilacConfig",
             dependencies: [
-                "LilacTOML",
+                "LilacTOML"
             ],
-            swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency")
-            ],
+            swiftSettings: swiftSettings,
         ),
         .target(
             name: "LilacTOML",
             dependencies: [
                 .product(name: "TOML", package: "swift-toml")
             ],
-            swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency")
-            ],
+            swiftSettings: swiftSettings,
         ),
         .testTarget(
             name: "LilacTests",
             dependencies: ["Lilac"],
-            swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency"),
-            ],
+            swiftSettings: swiftSettings,
         ),
     ]
 )
